@@ -10,7 +10,9 @@ import Foundation
 protocol NetworkService {
     func fetchListOfBeers(page: Int, completion: @escaping ([BeerItem]) -> Void)
 
-//    func searchBeerById(id: Int, completion: @escaping ([BeerItem]?) -> Void)
+    func searchBeerById(id: Int, completion: @escaping ([BeerItem]?) -> Void)
+    
+    
 //    func getRandomBeer(completion: @escaping ([BeerItem]) -> Void)
 }
 

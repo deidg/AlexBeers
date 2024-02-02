@@ -20,7 +20,7 @@ final class BeerListVC: UIViewController {
     }()
     private var beers: [BeerItem] = []
     private var page = 1
-    private let networkingApi: NetworkService!
+    private let networkingApi: NetworkService!   // make optional ""
     // MARK: Initialization
     init(networkingApi: NetworkService = NetworkRequest()) {
         self.networkingApi = networkingApi

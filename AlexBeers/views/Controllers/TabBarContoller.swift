@@ -16,7 +16,7 @@ final class TabBarController: UITabBarController {
 
     private func generateTabs() {
         let beerListVC = UINavigationController(rootViewController: BeerListVC())
-        let searchVC = UINavigationController(rootViewController: SearchVC())
+        let searchVC = UINavigationController(rootViewController: SearchByIdVC())
         let randomBeerVC = UINavigationController(rootViewController: RandomBeerVC())
         beerListVC.tabBarItem = UITabBarItem(title: "Beer List", image: UIImage(systemName: "1.circle"), tag: 0)
         searchVC.tabBarItem = UITabBarItem(title: "Search ID", image: UIImage(systemName: "2.circle"), tag: 0)

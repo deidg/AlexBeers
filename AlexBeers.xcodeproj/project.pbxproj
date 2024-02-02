@@ -11,7 +11,7 @@
 		FAA4F0F12B6A8C64006EBB5B /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F02B6A8C64006EBB5B /* NetworkRequest.swift */; };
 		FAA4F0FA2B6A8C7E006EBB5B /* BeerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F32B6A8C7E006EBB5B /* BeerCell.swift */; };
 		FAA4F0FB2B6A8C7E006EBB5B /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F52B6A8C7E006EBB5B /* DetailVC.swift */; };
-		FAA4F0FC2B6A8C7E006EBB5B /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F62B6A8C7E006EBB5B /* SearchVC.swift */; };
+		FAA4F0FC2B6A8C7E006EBB5B /* SearchByIdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F62B6A8C7E006EBB5B /* SearchByIdVC.swift */; };
 		FAA4F0FD2B6A8C7F006EBB5B /* TabBarContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F72B6A8C7E006EBB5B /* TabBarContoller.swift */; };
 		FAA4F0FE2B6A8C7F006EBB5B /* BeerListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F82B6A8C7E006EBB5B /* BeerListVC.swift */; };
 		FAA4F0FF2B6A8C7F006EBB5B /* RandomBeerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA4F0F92B6A8C7E006EBB5B /* RandomBeerVC.swift */; };
@@ -49,7 +49,7 @@
 		FAA4F0F02B6A8C64006EBB5B /* NetworkRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		FAA4F0F32B6A8C7E006EBB5B /* BeerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerCell.swift; sourceTree = "<group>"; };
 		FAA4F0F52B6A8C7E006EBB5B /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
-		FAA4F0F62B6A8C7E006EBB5B /* SearchVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		FAA4F0F62B6A8C7E006EBB5B /* SearchByIdVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchByIdVC.swift; sourceTree = "<group>"; };
 		FAA4F0F72B6A8C7E006EBB5B /* TabBarContoller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarContoller.swift; sourceTree = "<group>"; };
 		FAA4F0F82B6A8C7E006EBB5B /* BeerListVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeerListVC.swift; sourceTree = "<group>"; };
 		FAA4F0F92B6A8C7E006EBB5B /* RandomBeerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomBeerVC.swift; sourceTree = "<group>"; };
@@ -113,11 +113,11 @@
 		FAA4F0F42B6A8C7E006EBB5B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FAA4F0F52B6A8C7E006EBB5B /* DetailVC.swift */,
-				FAA4F0F62B6A8C7E006EBB5B /* SearchVC.swift */,
 				FAA4F0F72B6A8C7E006EBB5B /* TabBarContoller.swift */,
 				FAA4F0F82B6A8C7E006EBB5B /* BeerListVC.swift */,
+				FAA4F0F62B6A8C7E006EBB5B /* SearchByIdVC.swift */,
 				FAA4F0F92B6A8C7E006EBB5B /* RandomBeerVC.swift */,
+				FAA4F0F52B6A8C7E006EBB5B /* DetailVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -362,7 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAA4F0FC2B6A8C7E006EBB5B /* SearchVC.swift in Sources */,
+				FAA4F0FC2B6A8C7E006EBB5B /* SearchByIdVC.swift in Sources */,
 				FAE66D2A2B6A4BED00908C32 /* AppDelegate.swift in Sources */,
 				FAA4F0EE2B6A8C5B006EBB5B /* BeerItem.swift in Sources */,
 				FAA4F0FA2B6A8C7E006EBB5B /* BeerCell.swift in Sources */,
