@@ -89,7 +89,7 @@ final class BeerListVC: UIViewController {
         })
     }
 }
-
+//MARK: - Extension
 extension BeerListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return beers.count
