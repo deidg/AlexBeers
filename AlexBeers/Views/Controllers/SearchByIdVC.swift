@@ -11,14 +11,14 @@ import Kingfisher
 
 class SearchByIdVC: UIViewController {
     // MARK: Elements
-    var networkRequest = NetworkRequest()
-    var searchController = UISearchController(searchResultsController: nil)
-    private var beers: [BeerItem] = []
+    private let networkRequest = NetworkRequest()
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let beers: [BeerItem] = []
     private let beerImageView: UIImageView = {
         let beerImageView = UIImageView()
         beerImageView.contentMode = .scaleAspectFit
         beerImageView.snp.makeConstraints { make in
-            make.height.width.equalTo(300)
+            make.height.equalTo(300)
         }
         return beerImageView
     }()
@@ -91,8 +91,11 @@ class SearchByIdVC: UIViewController {
     private func setupLabels() {
         view.addSubview(mainStackView)
         mainStackView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.trailing.leading.bottom.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+//            make.trailing.leading.equalToSuperview()
+            make.trailing.leading.equalTo(view.safeAreaLayoutGuide)
+
+            //safeAreaLayoutGuide
         }
     }
     
