@@ -10,6 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class BeerCell: UITableViewCell {
+    // MARK: - Elements
     private let beerImageView: UIImageView = {
         let beerImageView = UIImageView()
         beerImageView.contentMode = .scaleAspectFit
