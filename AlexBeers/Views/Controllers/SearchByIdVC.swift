@@ -14,7 +14,13 @@ final class SearchByIdVC: UIViewController {
     private let networkingApi: NetworkService!
     private let searchController = UISearchController(searchResultsController: nil)
     private let beers: [BeerItem] = []
-    private let viewTemplate = ViewTemplate()
+    private let beerViewTemplate = BeerViewTemplate()
+    private let onboardLabel: UILabel = {
+        let onboardLabel = UILabel()
+        onboardLabel.text = "Enter beer ID (max 300)"
+        return onboardLabel
+    }()
+    
     // MARK: Initialization
     init(networkingApi: NetworkService = NetworkRequest()) {
         self.networkingApi = networkingApi
@@ -28,7 +34,7 @@ final class SearchByIdVC: UIViewController {
         super.viewDidLoad()
         setupNavigationTitle()
         setupVC()
-        setupViewTemplate()
+        setupOnboardLabel()
         setupSearchController()
     }
     // MARK: Private Methods
@@ -42,12 +48,18 @@ final class SearchByIdVC: UIViewController {
     }
     
     private func setupViewTemplate() {
-        view.addSubview(viewTemplate)
-        viewTemplate.snp.makeConstraints { make in
+        view.addSubview(beerViewTemplate)
+        beerViewTemplate.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.trailing.leading.equalTo(view.safeAreaLayoutGuide)
         }
-        viewTemplate.setupLabels()
+    }
+    
+    private func setupOnboardLabel() {
+        view.addSubview(onboardLabel)
+        onboardLabel.snp.makeConstraints { make in
+            make.center.equalTo(view)
+        }
     }
     
     private func setupSearchController() {
@@ -57,26 +69,16 @@ final class SearchByIdVC: UIViewController {
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        searchController.searchBar.keyboardType = .numberPad
     }
-    
-    private func unHideLabels() {
-        viewTemplate.descLabel.isHidden = false
-        viewTemplate.beerImageView.isHidden = false
-        viewTemplate.idLabel.isHidden = false
-    }
-    
+ 
     private func getBeerInfoByID(id: Int) {
         networkingApi.searchBeerById(id: id) { [weak self]  beerResponse in
             guard let self else { return }
             let beer = beerResponse?.first
-            unHideLabels()
-            DispatchQueue.main.async {
-                self.viewTemplate.beerImageView.kf.setImage(with: URL(string: beer?.imageURL ?? ""))
-                self.viewTemplate.idLabel.text = String((beer?.id)!)
-                //self.idLabel.text = String(beer.id ?? "")
-                self.viewTemplate.nameLabel.text = beer?.name ?? ""
-                self.viewTemplate.descLabel.text = beer?.description ?? ""
-            }
+            beerViewTemplate.configureView(imageLink: String(beer?.imageURL ?? ""),
+                                           id: beer?.id ?? 0, name: beer?.name ?? "",
+                                           description: beer?.description ?? "")
         }
     }
 }
@@ -93,12 +95,13 @@ extension SearchByIdVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let inputID = Int(searchController.searchBar.text ?? "") else { return }
         if inputID < 300 {
+            onboardLabel.isHidden = true
+            beerViewTemplate.isHidden = false
+            setupViewTemplate()
             getBeerInfoByID(id: inputID)
         } else {
-            viewTemplate.nameLabel.text = "ID must be less 300"
-            viewTemplate.descLabel.isHidden = true
-            viewTemplate.beerImageView.isHidden = true
-            viewTemplate.idLabel.isHidden = true
+            beerViewTemplate.isHidden = true
+            onboardLabel.isHidden = false
         }
     }
 }

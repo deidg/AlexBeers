@@ -64,7 +64,7 @@ final class BeerCell: UITableViewCell {
         DispatchQueue.main.async { 
             self.beerImageView.kf.setImage(with: URL(string: model.imageURL ?? ""))
             self.idLabel.text = String(model.id ?? 0)
-            self.nameLabel.text =  model.name ?? ""
+            self.nameLabel.text = model.name ?? ""
             self.descLabel.text = model.description ?? ""
         }
     }
