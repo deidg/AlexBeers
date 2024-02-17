@@ -11,6 +11,10 @@ import Kingfisher
 
 final class BeerListVC: UIViewController {
     // MARK: Elements
+    private let beerViewTemplate = BeerViewTemplate()   // ???
+    
+//    private let detailVC = DetailVC(beerItem: <#BeerItem#>)
+    
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let tableView: UITableView = {
@@ -77,9 +81,7 @@ final class BeerListVC: UIViewController {
         })
         self.activityIndicator.stopAnimating()
     }
-    
-
-    
+     
     @objc private func resetView() {
         networkingApi.fetchListOfBeers(page: 1, completion: { [weak self] beers in
             guard let self else { return }
@@ -90,6 +92,29 @@ final class BeerListVC: UIViewController {
             }
         })
     }
+    
+    
+     private func presentDetailVC(for beer: BeerItem) {
+        let detailVC = DetailVC(beerItem: beer)
+        detailVC.modalPresentationStyle = .fullScreen
+        present(detailVC, animated: true)
+    }
+
+    
+    
+//    @objc private func presentDetailVC() {
+////        detailVC.modalPresentationStyle = .fullScreen
+//////        present(detailVC, animated: false)
+////        present(detailVC, animated: true) {
+////            <#code#>
+////        }
+//        
+//        let detailVC = DetailVC(beer: beer)
+//          detailVC.modalPresentationStyle = .fullScreen
+//          present(detailVC, animated: true)
+//        
+//    }
+    
 }
 //MARK: - Extension
 extension BeerListVC: UITableViewDelegate, UITableViewDataSource {
@@ -101,6 +126,14 @@ extension BeerListVC: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "BeerTableViewCell") as? BeerCell else { return UITableViewCell() }
         cell.setupView(model: beers[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        presentDetailVC()
+        
+        let selectedBeer = beers[indexPath.row]
+           presentDetailVC(for: selectedBeer)
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
