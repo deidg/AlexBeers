@@ -78,6 +78,8 @@ final class BeerListVC: UIViewController {
         self.activityIndicator.stopAnimating()
     }
     
+
+    
     @objc private func resetView() {
         networkingApi.fetchListOfBeers(page: 1, completion: { [weak self] beers in
             guard let self else { return }

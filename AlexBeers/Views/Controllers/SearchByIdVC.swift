@@ -15,6 +15,7 @@ final class SearchByIdVC: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private let beers: [BeerItem] = []
     private let beerViewTemplate = BeerViewTemplate()
+    private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let onboardLabel: UILabel = {
         let onboardLabel = UILabel()
         onboardLabel.text = "Enter beer ID (max 300)"
@@ -73,6 +74,8 @@ final class SearchByIdVC: UIViewController {
     }
  
     private func getBeerInfoByID(id: Int) {
+        self.activityIndicator.startAnimating()
+
         networkingApi.searchBeerById(id: id) { [weak self]  beerResponse in
             guard let self else { return }
             let beer = beerResponse?.first
@@ -80,6 +83,8 @@ final class SearchByIdVC: UIViewController {
                                            id: beer?.id ?? 0, name: beer?.name ?? "",
                                            description: beer?.description ?? "")
         }
+        self.activityIndicator.stopAnimating()
+
     }
 }
 // MARK: Constants

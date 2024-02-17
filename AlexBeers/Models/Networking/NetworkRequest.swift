@@ -11,12 +11,29 @@ protocol NetworkService {
     func fetchListOfBeers(page: Int, completion: @escaping ([BeerItem]) -> Void)
 
     func searchBeerById(id: Int, completion: @escaping ([BeerItem]?) -> Void)
-    
-    
-//    func getRandomBeer(completion: @escaping ([BeerItem]) -> Void)
+        
+    func getRandomBeer(completion: @escaping ([BeerItem]) -> Void)
 }
 
 class NetworkRequest: NetworkService {
+    func getRandomBeer(completion: @escaping ([BeerItem]) -> Void) {
+        guard let url = URL(string: "https://api.punkapi.com/v2/beers/random") else {
+            return
+        }
+        DispatchQueue.global().async {
+            let session = URLSession(configuration: .default)
+            let task = session.dataTask(with: url) { (data, response, error) in
+                guard let data = data, error == nil else { return }
+                DispatchQueue.main.async {
+                    let beerResponse = try? JSONDecoder().decode([BeerItem].self, from: data)
+                    completion(beerResponse ?? [BeerItem]())
+                    return
+                }
+            }
+            task.resume()
+        }
+    }
+    
     //MARK: - Methods
     func fetchListOfBeers(page: Int, completion: @escaping ([BeerItem]) -> Void) {
         guard let url = URL(string: "https://api.punkapi.com/v2/beers?per_page=25&page=\(page)") else {
@@ -53,4 +70,24 @@ class NetworkRequest: NetworkService {
             task.resume()
         }
     }
+    
+//    func getRandomBeer(page: Int, completion: @escaping ([BeerItem]) -> Void) {
+//        guard let url = URL(string: "https://api.punkapi.com/v2/beers/random") else {
+//            return
+//        }
+//        DispatchQueue.global().async {
+//            let session = URLSession(configuration: .default)
+//            let task = session.dataTask(with: url) { (data, response, error) in
+//                guard let data = data, error == nil else { return }
+//                DispatchQueue.main.async {
+//                    let beerResponse = try? JSONDecoder().decode([BeerItem].self, from: data)
+//                    completion(beerResponse ?? [BeerItem]())
+//                    return
+//                }
+//            }
+//            task.resume()
+//        }
+//    }
+    
+    
 }
