@@ -10,11 +10,8 @@ import SnapKit
 import Kingfisher
 
 final class BeerListVC: UIViewController {
-    // MARK: Elements
-    private let beerViewTemplate = BeerViewTemplate()   // ???
-    
-//    private let detailVC = DetailVC(beerItem: <#BeerItem#>)
-    
+    // MARK: - Elements
+    private let beerViewTemplate = BeerViewTemplate()
     private let refreshControl = UIRefreshControl()
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     private let tableView: UITableView = {
@@ -25,7 +22,7 @@ final class BeerListVC: UIViewController {
     private var beers: [BeerItem] = []
     private var page = 1
     private let networkingApi: NetworkService!
-    // MARK: Initialization
+    // MARK: - Initialization
     init(networkingApi: NetworkService = NetworkRequest()) {
         self.networkingApi = networkingApi
         super.init(nibName: nil, bundle: nil)
@@ -33,7 +30,7 @@ final class BeerListVC: UIViewController {
     required init?(coder: NSCoder) {
         return nil
     }
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSubview()
@@ -42,7 +39,7 @@ final class BeerListVC: UIViewController {
         setupDelegates()
         addTargets()
     }
-    // MARK: Private Methods
+    // MARK: - Private methods
     private func setupSubview() {
         view.addSubview(tableView)
         view.addSubview(activityIndicator)
@@ -81,7 +78,16 @@ final class BeerListVC: UIViewController {
         })
         self.activityIndicator.stopAnimating()
     }
-     
+    
+    private func presentDetailVC(for beer: BeerItem) {
+        let detailVC = DetailVC(beerItem: beer)
+        let navigationController = UINavigationController(rootViewController: detailVC)
+        navigationController.modalPresentationStyle = .fullScreen
+        let returnButton = UIBarButtonItem(title: "Return", style: .plain, target: self, action: #selector(dismissDetailVC))
+        detailVC.navigationItem.leftBarButtonItem = returnButton
+        present(navigationController, animated: true)
+    }
+    // MARK: - @objc methods
     @objc private func resetView() {
         networkingApi.fetchListOfBeers(page: 1, completion: { [weak self] beers in
             guard let self else { return }
@@ -93,28 +99,9 @@ final class BeerListVC: UIViewController {
         })
     }
     
-    
-     private func presentDetailVC(for beer: BeerItem) {
-        let detailVC = DetailVC(beerItem: beer)
-        detailVC.modalPresentationStyle = .fullScreen
-        present(detailVC, animated: true)
+    @objc private func dismissDetailVC() {
+        dismiss(animated: true)
     }
-
-    
-    
-//    @objc private func presentDetailVC() {
-////        detailVC.modalPresentationStyle = .fullScreen
-//////        present(detailVC, animated: false)
-////        present(detailVC, animated: true) {
-////            <#code#>
-////        }
-//        
-//        let detailVC = DetailVC(beer: beer)
-//          detailVC.modalPresentationStyle = .fullScreen
-//          present(detailVC, animated: true)
-//        
-//    }
-    
 }
 //MARK: - Extension
 extension BeerListVC: UITableViewDelegate, UITableViewDataSource {
@@ -129,11 +116,9 @@ extension BeerListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        presentDetailVC()
-        
         let selectedBeer = beers[indexPath.row]
-           presentDetailVC(for: selectedBeer)
-        
+        presentDetailVC(for: selectedBeer)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

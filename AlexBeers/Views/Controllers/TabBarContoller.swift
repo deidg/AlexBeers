@@ -8,12 +8,12 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
+    // MARK: - Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
         generateTabs()
     }
-
+    // MARK: - Private method
     private func generateTabs() {
         let beerListVC = UINavigationController(rootViewController: BeerListVC())
         let searchVC = UINavigationController(rootViewController: SearchByIdVC())

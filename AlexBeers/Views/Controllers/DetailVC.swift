@@ -9,35 +9,25 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-
 class DetailVC: UIViewController {
     // MARK: - Elements
     private let beerViewTemplate = BeerViewTemplate()
-    private var beerItem: BeerItem?
-    
-    // Initialize DetailVC with a BeerItem
+    //MARK: - Initialization
     init(beerItem: BeerItem) {
-        self.beerItem = beerItem
         super.init(nibName: nil, bundle: nil)
+        configureView(with: beerItem)
     }
-    
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupVC()
         setupUI()
-        gestureRecognize()
     }
-    
-    // MARK: Private Methods
+    // MARK: - Private methods
     private func setupVC() {
         view.backgroundColor = .white
-        if let beer = beerItem {
-            configureView(with: beer)
-        }
     }
     
     private func setupUI() {
@@ -49,20 +39,13 @@ class DetailVC: UIViewController {
     }
     
     private func configureView(with beer: BeerItem) {
-        beerViewTemplate.configureView(imageLink: beer.imageURL ?? "",
-                                        id: beer.id ?? 0,
-                                        name: beer.name ?? "",
-                                        description: beer.description ?? "")
-    }
- 
-    private func gestureRecognize() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeDetailVC))
-               view.addGestureRecognizer(tapGesture)
-    }
-    
-    
-    @objc func closeDetailVC() {
-        dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            beerViewTemplate.configureView(imageLink: beer.imageURL ?? "",
+                                           id: beer.id ?? 0,
+                                           name: beer.name ?? "",
+                                           description: beer.description ?? "")
+        }
     }
 }
 

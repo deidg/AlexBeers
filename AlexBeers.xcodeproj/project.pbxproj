@@ -99,17 +99,19 @@
 		FAA4F0EF2B6A8C64006EBB5B /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				FAA4F0ED2B6A8C5B006EBB5B /* BeerItem.swift */,
 				FAA4F0F02B6A8C64006EBB5B /* NetworkRequest.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		FAA4F0F22B6A8C7E006EBB5B /* Cells */ = {
+		FAA4F0F22B6A8C7E006EBB5B /* Elements */ = {
 			isa = PBXGroup;
 			children = (
+				FADFA3362B7116C400E8F15D /* BeerViewTemplate.swift */,
 				FAA4F0F32B6A8C7E006EBB5B /* BeerCell.swift */,
 			);
-			path = Cells;
+			path = Elements;
 			sourceTree = "<group>";
 		};
 		FAA4F0F42B6A8C7E006EBB5B /* Controllers */ = {
@@ -194,9 +196,8 @@
 		FAE66D632B6A4F6200908C32 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FAA4F0F22B6A8C7E006EBB5B /* Cells */,
+				FAA4F0F22B6A8C7E006EBB5B /* Elements */,
 				FAA4F0F42B6A8C7E006EBB5B /* Controllers */,
-				FADFA3362B7116C400E8F15D /* BeerViewTemplate.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				FAA4F0EF2B6A8C64006EBB5B /* Networking */,
-				FAA4F0ED2B6A8C5B006EBB5B /* BeerItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

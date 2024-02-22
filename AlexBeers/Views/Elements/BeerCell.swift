@@ -23,7 +23,7 @@ final class BeerCell: UITableViewCell {
         let idLabel = UILabel()
         idLabel.textColor = UIColor.orange
         idLabel.text = "ID"
-        idLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+        idLabel.font = .boldSystemFont(ofSize: 12)
         return idLabel
     }()
     private let nameLabel: UILabel = {
@@ -31,7 +31,7 @@ final class BeerCell: UITableViewCell {
         nameLabel.text = "User Name"
         return nameLabel
     }()
-    private let descLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let descLabel = UILabel()
         descLabel.text = "Description"
         descLabel.textColor = UIColor.gray
@@ -39,7 +39,7 @@ final class BeerCell: UITableViewCell {
         return descLabel
     }()
     private lazy var nameStackView: UIStackView = {
-        let nameStackView = UIStackView(arrangedSubviews: [idLabel, nameLabel, descLabel])
+        let nameStackView = UIStackView(arrangedSubviews: [idLabel, nameLabel, descriptionLabel])
         nameStackView.axis = .vertical
         nameStackView.alignment = .top
         return nameStackView
@@ -51,24 +51,24 @@ final class BeerCell: UITableViewCell {
         mainStackView.spacing = Constants.stackSpacing
         return mainStackView
     }()
-    // MARK: Initialization
+    // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSubview()
     }
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        return nil
     }
-    // MARK: Public Methods
+    // MARK: - Public methods
     func setupView(model: BeerItem) {
-        DispatchQueue.main.async { 
+        DispatchQueue.main.async {
             self.beerImageView.kf.setImage(with: URL(string: model.imageURL ?? ""))
             self.idLabel.text = String(model.id ?? 0)
             self.nameLabel.text = model.name ?? ""
-            self.descLabel.text = model.description ?? ""
+            self.descriptionLabel.text = model.description ?? ""
         }
     }
-    // MARK: Private Methods
+    // MARK: - Private methods
     private func setupSubview() {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints { make in
@@ -77,7 +77,7 @@ final class BeerCell: UITableViewCell {
         }
     }
 }
-    // MARK: Constants
+// MARK: - Constants
 extension BeerCell {
     enum Constants {
         static let stackSpacing: CGFloat = 10.0

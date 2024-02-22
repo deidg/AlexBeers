@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 
 final class SearchByIdVC: UIViewController {
-    // MARK: Elements
+    // MARK: - Elements
     private let networkingApi: NetworkService!
     private let searchController = UISearchController(searchResultsController: nil)
     private let beers: [BeerItem] = []
@@ -21,8 +21,7 @@ final class SearchByIdVC: UIViewController {
         onboardLabel.text = "Enter beer ID (max 300)"
         return onboardLabel
     }()
-    
-    // MARK: Initialization
+    // MARK: - Initialization
     init(networkingApi: NetworkService = NetworkRequest()) {
         self.networkingApi = networkingApi
         super.init(nibName: nil, bundle: nil)
@@ -30,7 +29,7 @@ final class SearchByIdVC: UIViewController {
     required init?(coder: NSCoder) {
         return nil
     }
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationTitle()
@@ -38,7 +37,7 @@ final class SearchByIdVC: UIViewController {
         setupOnboardLabel()
         setupSearchController()
     }
-    // MARK: Private Methods
+    // MARK: - Private methods
     private func setupNavigationTitle() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Search by ID"
@@ -49,6 +48,7 @@ final class SearchByIdVC: UIViewController {
     }
     
     private func setupViewTemplate() {
+        view.addSubview(activityIndicator)
         view.addSubview(beerViewTemplate)
         beerViewTemplate.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -57,6 +57,10 @@ final class SearchByIdVC: UIViewController {
     }
     
     private func setupOnboardLabel() {
+        view.addSubview(activityIndicator)
+        activityIndicator.snp.makeConstraints { make in
+            make.center.equalTo(view)
+        }
         view.addSubview(onboardLabel)
         onboardLabel.snp.makeConstraints { make in
             make.center.equalTo(view)
@@ -75,24 +79,14 @@ final class SearchByIdVC: UIViewController {
  
     private func getBeerInfoByID(id: Int) {
         self.activityIndicator.startAnimating()
-
         networkingApi.searchBeerById(id: id) { [weak self]  beerResponse in
             guard let self else { return }
             let beer = beerResponse?.first
             beerViewTemplate.configureView(imageLink: String(beer?.imageURL ?? ""),
                                            id: beer?.id ?? 0, name: beer?.name ?? "",
                                            description: beer?.description ?? "")
+            self.activityIndicator.stopAnimating()
         }
-        self.activityIndicator.stopAnimating()
-
-    }
-}
-// MARK: Constants
-extension SearchByIdVC {
-    enum Constants {
-        static let nameStackViewstackSpacing : CGFloat = 2.0
-        static let mainStackViewstackSpacing: CGFloat = 10.0
-        static let padding: CGFloat = 16.0
     }
 }
 //MARK: - Extension
@@ -108,5 +102,13 @@ extension SearchByIdVC: UISearchResultsUpdating {
             beerViewTemplate.isHidden = true
             onboardLabel.isHidden = false
         }
+    }
+}
+// MARK: Constants
+extension SearchByIdVC {
+    enum Constants {
+        static let nameStackViewstackSpacing : CGFloat = 2.0
+        static let mainStackViewstackSpacing: CGFloat = 10.0
+        static let padding: CGFloat = 16.0
     }
 }

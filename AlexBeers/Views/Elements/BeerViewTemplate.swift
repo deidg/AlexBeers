@@ -22,23 +22,19 @@ class BeerViewTemplate: UIView {
     private let idLabel: UILabel = {
         let idLabel = UILabel()
         idLabel.textColor = UIColor.orange
-        idLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
-        idLabel.snp.makeConstraints { make in
-            make.height.equalTo(30)
-        }
+        idLabel.font = .boldSystemFont(ofSize: 20)
         return idLabel
     }()
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.textColor = .black
-        nameLabel.snp.makeConstraints { make in
-            make.height.equalTo(30)
-        }
+        nameLabel.font = .boldSystemFont(ofSize: 20)
+        nameLabel.numberOfLines = 0
+        nameLabel.textAlignment = .center
         return nameLabel
     }()
-    private let descLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let descLabel = UILabel()
-        descLabel.text = "Enter ID to search beer"
         descLabel.textColor = UIColor.gray
         descLabel.textColor = .black
         descLabel.textAlignment = .center
@@ -46,7 +42,7 @@ class BeerViewTemplate: UIView {
         return descLabel
     }()
     private lazy var nameStackView: UIStackView = {
-        let nameStackView = UIStackView(arrangedSubviews: [idLabel, nameLabel, descLabel])
+        let nameStackView = UIStackView(arrangedSubviews: [idLabel, nameLabel, descriptionLabel])
         nameStackView.axis = .vertical
         nameStackView.alignment = .center
         nameStackView.spacing = Constants.nameStackViewstackSpacing
@@ -60,20 +56,20 @@ class BeerViewTemplate: UIView {
         mainStackView.spacing = Constants.mainStackViewstackSpacing
         return mainStackView
     }()
-    // MARK: Initialization
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLabels()
     }
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        return nil
     }
     
     private func setupLabels() {
         addSubview(mainStackView)
         mainStackView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
-            make.trailing.leading.equalTo(safeAreaLayoutGuide)
+            make.trailing.leading.equalTo(safeAreaLayoutGuide).inset(10)
         }
     }
     
@@ -84,14 +80,15 @@ class BeerViewTemplate: UIView {
             beerImageView.kf.setImage(with: imageURL)
             idLabel.text = "\(id)"
             nameLabel.text = name
-            descLabel.text = description
+            descriptionLabel.text = description
         }
     }
 }
-// MARK: Constants
+// MARK: - Constants
 extension BeerViewTemplate {
     enum Constants {
-        static let nameStackViewstackSpacing : CGFloat = 2.0
+        static let idLabelFontSize: CGFloat = 15.0
+        static let nameStackViewstackSpacing: CGFloat = 2.0
         static let mainStackViewstackSpacing: CGFloat = 10.0
         static let padding: CGFloat = 16.0
     }
